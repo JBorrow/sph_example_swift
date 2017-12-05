@@ -36,3 +36,29 @@ def test_positions():
 
     assert all(np.isclose(generated, expected, 0.01))
 
+
+def test_internal_energies():
+    """
+    Unit tests for the internal energies generator.
+    """
+
+    generated = gi.gen_internal_energies(
+        energy_left=1.,
+        energy_right=10.,
+        nparts=2,
+    )
+
+    expected = np.array([1., 10.])
+
+    assert all(np.isclose(generated, expected, 0.01))
+
+    generated = gi.gen_internal_energies(
+        energy_left=1.,
+        energy_right=10.,
+        nparts=100,
+    )
+
+    expected = np.array([1.]*50 + [10.]*50)
+
+    assert all(np.isclose(generated, expected, 0.01))
+
