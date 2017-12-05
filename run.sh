@@ -1,5 +1,9 @@
 #! /bin/sh
 
+# Clean up
+rm initial_conditions.hdf5
+rm -rf output
+
 # Generate Initial Conditions
 python3 generate_ics.py
 
