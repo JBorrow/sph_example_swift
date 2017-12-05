@@ -5,6 +5,15 @@ A quick example of an SPH test in 1D. We use `swift` as a submodule to
 actually run our test problems rather than  having to concern ourselves with
 writing our own (slower) SPH code.
 
+### Requirements
+
++ `python3`
++ `h5py`, `numpy`, `pytest` (for the tests) and `matplotlib`. Use 
+   `pip install -r requirements.txt`.
++ `swift`'s requirements, i.e. `hdf5>=1.8.0`, `fftw3`.
+
+### Running the problem
+
 To run this, do the following:
 
 + Ensure the `swiftsim` submodule is loaded/cloned
