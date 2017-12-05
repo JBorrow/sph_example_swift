@@ -30,5 +30,5 @@ SPH:
 
 # Parameters related to the initial conditions
 InitialConditions:
-  file_name:  ./initial_conditions.hdf5       # The file to read
+  file_name:  ../../initial_conditions.hdf5       # The file to read
 
