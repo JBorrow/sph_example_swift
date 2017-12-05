@@ -12,6 +12,9 @@ import numpy as np
 import h5py
 
 
+plt.rcParams["image.cmap"] = "cool"
+
+
 class Grid(object):
     """
     Grid object that contains various axes, and the figure object.
@@ -151,7 +154,7 @@ class Plotter(object):
             self.grid.grid.tight_layout(self.grid.figure)
 
         if save:
-            self.grid.figure.savefig(f"{filename[:-4]}png")
+            self.grid.figure.savefig(f"{filename[:-4]}png", dpi=300)
 
         return
 
@@ -193,6 +196,7 @@ class Plotter(object):
         self.grid.pressure_ax.scatter(
             self.data.positions,
             self.data.pressures,
+            c=self.data.energies,
             s=3
         )
 
@@ -210,6 +214,7 @@ class Plotter(object):
         self.grid.density_ax.scatter(
             self.data.positions,
             self.data.densities,
+            c=self.data.energies,
             s=3
         )
 
@@ -227,6 +232,7 @@ class Plotter(object):
         self.grid.hsml_ax.scatter(
             self.data.positions,
             self.data.hsmls,
+            c=self.data.energies,
             s=3
         )
 
@@ -237,4 +243,15 @@ class Plotter(object):
 
 
 if __name__ == "__main__":
-    PLOTTER = Plotter()
+    import sys
+
+    try:
+        number = int(sys.argv[1])
+    except:
+        number = 1
+
+    FILENAME = "output_{:04d}.hdf5".format(number)
+    print(f"Reading {FILENAME}")
+
+    PLOTTER = Plotter(FILENAME)
+
