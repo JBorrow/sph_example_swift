@@ -56,9 +56,10 @@ def write_data(positions, energies, boxsize, filename="initial_conditions.hdf5")
         wg.write_header(
             f,
             boxsize=boxsize,
-            flag_entropy=1,
+            flag_entropy=0,
             np_total=[len(positions), 0, 0, 0, 0, 0],
-            np_total_hw=[0]*6
+            np_total_hw=[0]*6,
+            other={"Dimension" : 1}
         )    
 
         wg.write_runtime_pars(
@@ -78,7 +79,7 @@ def write_data(positions, energies, boxsize, filename="initial_conditions.hdf5")
         wg.write_block(
             f,
             part_type=0,
-            pos=positions,
+            pos=np.array([positions, np.zeros_like(positions), np.zeros_like(positions)]).T,
             vel=np.zeros_like(positions),
             ids=np.arange(len(positions)),
             mass=np.ones_like(positions),
@@ -89,14 +90,15 @@ def write_data(positions, energies, boxsize, filename="initial_conditions.hdf5")
     return 0  # Living the UNIX life
 
 if __name__ == "__main__":
-    N_PARTS = 10000
+    N_PARTS = 1000
     SEP_LEFT = 0.1
     SEP_RIGHT = 1.0
+    DELTA = 0.0
     ENERGY_LEFT = 1.0
     ENERGY_RIGHT = 10.0
     BOXSIZE = (N_PARTS + 1) * (SEP_LEFT + SEP_RIGHT) / 2
 
-    POSITIONS = gen_positions(SEP_LEFT, SEP_RIGHT, N_PARTS)
+    POSITIONS = gen_positions(SEP_LEFT, SEP_RIGHT, DELTA, N_PARTS) + SEP_LEFT / 2
     ENERGIES = gen_internal_energies(ENERGY_LEFT, ENERGY_RIGHT, N_PARTS)
 
     EXIT_CODE = write_data(POSITIONS, ENERGIES, BOXSIZE)
