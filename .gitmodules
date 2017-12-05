@@ -1,0 +1,3 @@
+[submodule "swiftsim"]
+	path = swiftsim
+	url = git@gitlab.cosma.dur.ac.uk:swift/swiftsim.git

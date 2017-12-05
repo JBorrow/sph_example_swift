@@ -4,5 +4,3 @@ __pycache__/*
 *.swp
 
 *.hdf5
-
-swiftsim/*
