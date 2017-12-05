@@ -17,6 +17,7 @@ writing our own (slower) SPH code.
 To run this, do the following:
 
 + Ensure the `swiftsim` submodule is loaded/cloned
+  (i.e. run `git submodule update --init --recursive`)
 + `./run.sh` and wait.
 
 `run.sh` sets all of the correct configuration parameters for SWIFT, generates
