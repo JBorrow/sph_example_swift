@@ -5,10 +5,15 @@ A quick example of an SPH test in 1D. We use `swift` as a submodule to
 actually run our test problems rather than  having to concern ourselves with
 writing our own (slower) SPH code.
 
+There are several configuration options that you can tweak. There are of course
+the SWIFT configuration options that are available in `parameter_file.yml`, but
+the initial condition generator and plotting script are controlled by the
+`config.yml` file.
+
 ### Requirements
 
 + `python3`
-+ `h5py`, `numpy`, `pytest` (for the tests) and `matplotlib`. Use 
++ `h5py`, `numpy`, `pyyaml`, `pytest` (for the tests) and `matplotlib`. Use 
    `pip install -r requirements.txt`.
 + `swift`'s requirements, i.e. `hdf5>=1.8.0`, `fftw3`.
 
