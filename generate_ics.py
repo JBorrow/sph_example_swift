@@ -51,7 +51,7 @@ def gen_internal_energies(energy_left=1., energy_right=10., nparts=1000):
     return energies
     
 
-def write_data(positions, energies, boxsize, filename="initial_conditions.hdf5"):
+def write_data(positions, energies, boxsize, hsml, filename="initial_conditions.hdf5"):
     with h5py.File(filename, "w") as f:
         wg.write_header(
             f,
@@ -84,7 +84,7 @@ def write_data(positions, energies, boxsize, filename="initial_conditions.hdf5")
             ids=np.arange(len(positions)),
             mass=np.ones_like(positions),
             int_energy=energies,
-            smoothing=np.ones_like(positions),
+            smoothing=np.array(hsml),
         )
 
     return 0  # Living the UNIX life
@@ -100,8 +100,9 @@ if __name__ == "__main__":
 
     POSITIONS = gen_positions(SEP_LEFT, SEP_RIGHT, DELTA, N_PARTS) + SEP_LEFT / 2
     ENERGIES = gen_internal_energies(ENERGY_LEFT, ENERGY_RIGHT, N_PARTS)
+    SMOOTHING = [SEP_LEFT] * int(N_PARTS / 2) + [SEP_RIGHT] * int(N_PARTS / 2)
 
-    EXIT_CODE = write_data(POSITIONS, ENERGIES, BOXSIZE)
+    EXIT_CODE = write_data(POSITIONS, ENERGIES, BOXSIZE, SMOOTHING)
 
     exit(EXIT_CODE)
 
