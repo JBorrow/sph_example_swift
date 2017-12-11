@@ -90,19 +90,27 @@ def write_data(positions, energies, boxsize, hsml, filename="initial_conditions.
     return 0  # Living the UNIX life
 
 if __name__ == "__main__":
-    N_PARTS = 1000
-    SEP_LEFT = 1.0
-    SEP_RIGHT = 1.0
-    DELTA = 0.0
-    ENERGY_LEFT = 1.0
-    ENERGY_RIGHT = 10.0
-    BOXSIZE = (N_PARTS + 1) * (SEP_LEFT + SEP_RIGHT) / 2
+    import yaml
+
+    with open("config.yml", "r") as stream:
+        configuration_options = yaml.load(stream)
+        initial_conditions = configuration_options["initial_conditions"]
+
+        N_PARTS = initial_conditions["nparts"]
+        SEP_LEFT = initial_conditions["separations"]["left"]
+        SEP_RIGHT = initial_conditions["separations"]["right"]
+        DELTA = initial_conditions["delta"]
+        ENERGY_LEFT = initial_conditions["energies"]["left"]
+        ENERGY_RIGHT = initial_conditions["energies"]["right"]
+        FILENAME = initial_conditions["filename"]
+
+        BOXSIZE = (N_PARTS + 1) * (SEP_LEFT + SEP_RIGHT) / 2
 
     POSITIONS = gen_positions(SEP_LEFT, SEP_RIGHT, DELTA, N_PARTS) + SEP_LEFT / 2
     ENERGIES = gen_internal_energies(ENERGY_LEFT, ENERGY_RIGHT, N_PARTS)
     SMOOTHING = [SEP_LEFT] * int(N_PARTS / 2) + [SEP_RIGHT] * int(N_PARTS / 2)
 
-    EXIT_CODE = write_data(POSITIONS, ENERGIES, BOXSIZE, SMOOTHING)
+    EXIT_CODE = write_data(POSITIONS, ENERGIES, BOXSIZE, SMOOTHING, FILENAME)
 
     exit(EXIT_CODE)
 

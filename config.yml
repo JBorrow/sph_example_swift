@@ -1,0 +1,24 @@
+initial_conditions:
+  # Total number of particles
+  nparts: 1000
+
+  # Separations between particles on the 'left' of the boundary and on the 'right'
+  separations:
+    left: 0.1
+    right: 1.0
+
+  # Any extra distance in the boundary?
+  delta: 0
+
+  filename: "initial_conditions.hdf5"
+
+  # Internal energies on either side of the boundary.
+  energies:
+    left: 1.0
+    right: 10.0
+
+
+plotting:
+  limits:
+    left: 45
+    right: 60

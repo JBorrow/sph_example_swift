@@ -162,6 +162,13 @@ class Plotter(object):
 
         return
 
+
+    def close_figures(self):
+        """ Remove the figure! """
+        plt.close(self.grid.figure)
+        
+        return
+
    
     def set_plot_limits(self, ax):
         """
@@ -246,7 +253,7 @@ class Plotter(object):
         return None
 
 
-def do_plot(number):
+def do_plot(number, limits=[45, 60]):
     """
     Perform the whole plotting procedure for a given number.
     """
@@ -255,11 +262,15 @@ def do_plot(number):
 
     PLOTTER = Plotter(FILENAME)
 
+    PLOTTER.close_figures()
+
     return
 
 
 if __name__ == "__main__":
     import sys
+    import yaml
+
     from multiprocessing import Pool
 
     if len(sys.argv) == 1:
@@ -276,5 +287,17 @@ if __name__ == "__main__":
         exit(1)
 
 
+    with open("config.yml", "r") as stream:
+        configuration_options = yaml.load(stream)
+        plotting_options = configuration_options["plotting"]
+
+        LIMITS = [
+            plotting_options["limits"]["left"],
+            plotting_options["limits"]["right"]
+        ]
+
+
+    def plot_in_limits(number): return do_plot(number, LIMITS)
+
     with Pool() as pool:
-        pool.map(do_plot, numbers)
+        pool.map(plot_in_limits, numbers)
