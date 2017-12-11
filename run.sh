@@ -25,10 +25,7 @@ mkdir gadget
 cd gadget
 ../../swiftsim/examples/swift -s ../../parameter_file.yml
 
-for i in {0..100}
-do
-    python3 ../../make_plots.py $i
-done
+python3 ../../make_plots.py 0 101
 
 for file in *.png
 do
@@ -46,10 +43,7 @@ mkdir pressure_entropy
 cd pressure_entropy
 ../../swiftsim/examples/swift -s ../../parameter_file.yml
 
-for i in {0..100}
-do
-    python3 ../../make_plots.py $i
-done
+python3 ../../make_plots.py 0 101
 
 for file in *.png
 do

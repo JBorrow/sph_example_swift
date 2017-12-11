@@ -5,6 +5,10 @@ Author: Josh Borrow
 Date created: 5th December 2017
 """
 
+import matplotlib
+matplotlib.use("Agg")
+
+
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
 import numpy as np
@@ -242,16 +246,35 @@ class Plotter(object):
         return None
 
 
-if __name__ == "__main__":
-    import sys
-
-    try:
-        number = int(sys.argv[1])
-    except:
-        number = 1
-
+def do_plot(number):
+    """
+    Perform the whole plotting procedure for a given number.
+    """
     FILENAME = "output_{:04d}.hdf5".format(number)
     print(f"Reading {FILENAME}")
 
     PLOTTER = Plotter(FILENAME)
 
+    return
+
+
+if __name__ == "__main__":
+    import sys
+    from multiprocessing import Pool
+
+    if len(sys.argv) == 1:
+        print("Please specify a snapshot number.")
+        exit(1)
+    elif len(sys.argv) == 2:
+        numbers = [int(sys.argv[1])]
+    elif len(sys.argv) == 3:
+        lower = int(sys.argv[1])
+        upper = int(sys.argv[2])
+        numbers = range(lower, upper + 1)
+    else:
+        print("Please specify either one or two snapshot numbers.")
+        exit(1)
+
+
+    with Pool() as pool:
+        pool.map(do_plot, numbers)

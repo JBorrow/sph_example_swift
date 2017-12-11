@@ -91,7 +91,7 @@ def write_data(positions, energies, boxsize, hsml, filename="initial_conditions.
 
 if __name__ == "__main__":
     N_PARTS = 1000
-    SEP_LEFT = 0.1
+    SEP_LEFT = 1.0
     SEP_RIGHT = 1.0
     DELTA = 0.0
     ENERGY_LEFT = 1.0
